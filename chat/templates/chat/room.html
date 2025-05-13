@@ -1,0 +1,92 @@
+<!-- chat/templates/chat/room.html -->
+{% extends 'chat/base.html' %}
+{% load static tailwind_tags %}
+
+
+ {% block content %}
+  <div class="chat_message  md:h-[90vh] md:mt-[5vh] max-w-[723px] mx-auto h-[100vh]">
+<div class="chat-message-header">
+    <div><svg width="10" height="17" viewBox="0 0 10 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0.304688 8.25L0.902344 7.65234L7.65234 0.902344L8.25 0.304688L9.41016 1.5L8.84766 2.09766L2.66016 8.25L8.84766 14.4023L9.44531 15L8.25 16.1953L7.65234 15.5977L0.902344 8.84766L0.304688 8.25Z" fill="#F8F8F8"/>
+        </svg>
+        </div>
+    <div class="chat-message-header-details">
+    <div class="avatar">
+    </div>
+    <div class="username">
+        <div class="name">{{friend}}</div>
+        <div class="active">Active 1hr ago</div>
+    </div>
+    </div>
+</div>
+ <!-- <div> -->
+    <div id="chat-log" class="overflow-scroll">
+        {% for message in messages %}
+            <div class="message {% if message.sender == request.user %}right{% else %}left{% endif %}" >
+               <div> 
+                {{ message.content}}</div></div>
+        {% empty %}
+        No messages
+        {% endfor %}
+    </div>
+       
+        <div class="relative w-full  flex bg-green-300">  
+            <div class="bg-[#fafafa] w-full flex gap-[30px]">
+    <input id="chat-message-input" class="w-full flex-1 p-[20px]" placeholder="type your message" type="text" ><br>
+     <span type="submit" class="flex items-center justify-center" id="chat-message-submit">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="send-icon">
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
+        </span>
+</div>
+</div>
+    <div id="room-name" style="display:none;">{{room_id}}</div>
+<!-- </div> -->
+</div>
+    {% endblock %}
+    {% block script %}
+    <script>
+        const roomName = document.getElementById('room-name').textContent;
+
+        const chatSocket = new WebSocket(
+            'ws://'
+            + window.location.host
+            + '/ws/chat/'
+            + roomName
+            + '/'
+        );
+        // console.log(chatSocket)
+        chatSocket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+            let div = document.createElement('div')
+            const message = data.message + "\n"
+            div.innerText = message
+            div.classList.add('message');
+            div.classList.add('right'); 
+
+            document.querySelector('#chat-log').appendChild(div);
+
+        };
+
+        chatSocket.onclose = function(e) {
+            console.error('Chat socket closed unexpectedly');
+        };
+
+        document.querySelector('#chat-message-input').focus();
+        document.querySelector('#chat-message-input').onkeyup = function(e) {
+            if (e.key === 'Enter') {  // enter, return
+                document.querySelector('#chat-message-submit').click();
+            }
+        };
+
+        document.querySelector('#chat-message-submit').onclick = function(e) {
+            const messageInputDom = document.querySelector('#chat-message-input');
+            const message = messageInputDom.value;
+            chatSocket.send(JSON.stringify({
+                'message': message
+            }));
+            messageInputDom.value = '';
+        };
+    </script>
+    {% endblock %}

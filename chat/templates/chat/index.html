@@ -1,0 +1,58 @@
+<!-- chat/templates/chat/index.html -->
+{% extends 'chat/base.html' %}
+{% load static tailwind_tags %}
+
+   {% block content %}
+   <div class="md:h-[90vh] md:mt-[5vh] max-w-[723px] mx-auto h-[100vh] p-4 md:p-0">
+      <div class="flex justify-betweenitems-center ">
+         <div class="flex gap-3 items-center">
+         <div class="w-[40px] h-[40px] rounded-[100%] bg-[grey] opacity-4">
+
+         </div>
+      <h3>
+      chats
+      </h3>
+   </div>
+   <div>
+      <!-- camera -->
+   </div>
+   </div>
+
+   <div class=" rounded-[10px] mt-4 opacity-4">
+      <input type="text" class="rounded-[10px] px-[8px] w-full bg-[grey] w- py-[8px]  text-black opacity-[1]" placeholder="Search"/>
+   </div>
+  <div class="mt-4">
+      {% if personal_threads %}
+        {% for t in personal_threads %}
+          {% for u in t.users.all %}
+            {% if u != request.user %}
+              <a href="/chat/{{ u.id }}" class="flex gap-4 items-center no-underline ">
+               <div class="w-[40px] h-[40px] rounded-[100%] bg-[grey] opacity-4">
+
+               </div>
+               <div class="">
+               <p class="text-[#000] "> {{ u.username }}</p>
+                {{ t.last_message.content }}
+               </div>
+              </a>
+            {% endif %}
+          {% endfor %}
+        {% endfor %}
+      {% else %}
+        <p>You don't have any chat at the moment.</p>
+      {% endif %}
+    </div>
+  <!-- <div>
+      <h2> Suggested Friends</h2>
+   {% for i in strangers %}
+       <p>  {{i.username}}
+          <a href="/chat/{{i.id}}">Send Request</a>
+       </p>
+   {% empty %}
+   No user
+   {% endfor %}
+</div> -->
+</div>
+   {% endblock %}
+
+No chat yet

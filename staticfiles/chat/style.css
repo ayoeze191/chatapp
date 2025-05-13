@@ -1,0 +1,94 @@
+/* Messages */
+#chat-log {
+  flex: 1;
+  border: 0;
+  width: 100%; }
+  #chat-log .message {
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.25);
+    padding: 20px;
+    margin: 16px;
+    border-radius: 10px;
+    height: 53px;
+    /* max-width: 60%; */ }
+  #chat-log .left {
+    text-align: left;
+    align-self: flex-start;
+    margin-right: auto;
+    background: #f2f2f2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content; }
+  #chat-log .right {
+    text-align: right;
+    align-self: flex-end;
+    background: #3047ec;
+    margin-left: auto;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content; }
+
+.chat_message {
+  position: relative;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+  border-radius: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; }
+  .chat_message .input {
+    margin-top: 20px;
+    border: 0;
+    width: 100%;
+    background-color: #fafafa !important; }
+    .chat_message .input input {
+      border: 0 !important;
+      outline: 0 !important;
+      background-color: #fafafa !important;
+      padding: 20px;
+      flex: 1;
+      padding: 20px; }
+    .chat_message .input .button {
+      width: fit-content !important;
+      padding: 0; }
+
+.chat-message-header {
+  min-height: 80px;
+  width: 100%;
+  padding: 20px;
+  background-color: #3047ec;
+  display: flex;
+  gap: 30px;
+  align-items: center; }
+  .chat-message-header .chat-message-header-details {
+    display: flex;
+    gap: 14px;
+    align-items: center; }
+    .chat-message-header .chat-message-header-details .username {
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      gap: 0px; }
+      .chat-message-header .chat-message-header-details .username .name {
+        font-weight: 500;
+        font-size: 18px; }
+      .chat-message-header .chat-message-header-details .username .active {
+        font-size: 14px;
+        line-height: 18px; }
+    .chat-message-header .chat-message-header-details .avatar {
+      height: 40px;
+      width: 40px;
+      background-color: gray;
+      border-radius: 150px; }
+
+@media screen and (min-width: 640px) {
+  .chat-message-header {
+    border-top-right-radius: 40px;
+    border-top-left-radius: 40px; }
+  .message {
+    margin: 20px; }
+  #chat-log {
+    flex: 1; } }
+
+/*# sourceMappingURL=style.css.map */
